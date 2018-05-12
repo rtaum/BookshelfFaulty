@@ -1,15 +1,25 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 
 namespace Bookshelf.Models
 {
     public class Book
     {
-        public int Id { get; set; }
-
-        public string Title { get; set; }
-
+        [JsonProperty("author")]
         public string Author { get; set; }
 
-        public DateTime PublicationDate { get; set; }
+        [JsonProperty("country")]
+        public string Country { get; set; }
+
+        [JsonProperty("language")]
+        public string Language { get; set; }
+
+        [JsonProperty("pages")]
+        public int Pages { get; set; }
+
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
+        [JsonProperty("year")]
+        public int Year { get; set; }
     }
 }

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Bookshelf.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -20,8 +22,13 @@ namespace Bookshelf.Controllers
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            string dataFilePath = Path.Combine(_hostingEnvironment.ContentRootPath, @"Data\books.json");
-            return await Task.FromResult<ActionResult>(Ok(FileSystemFile.ReadAllTextAsync(dataFilePath)));
+            string dataFilePath = Path.Combine(
+                _hostingEnvironment.ContentRootPath,
+                @"Data\books.json");
+
+            var jsonData = await FileSystemFile.ReadAllTextAsync(dataFilePath);
+            var books = JsonConvert.DeserializeObject<Book[]>(jsonData);
+            return await Task.FromResult<ActionResult>(Ok(books));
         }
     }
 }
